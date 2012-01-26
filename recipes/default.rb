@@ -20,11 +20,6 @@
 
 include_recipe "build-essential"
 
-node[:node_modules].each do |node_module|
-  nodejs_npm node_module do
-    action :install
-  end
-end
 
 case node[:platform]
   when "centos","redhat","fedora"
@@ -67,3 +62,8 @@ execute "make install" do
   not_if "test `#{node[:nodejs][:dir]}/bin/node` == 'v#{node[:nodejs][:version]}'"
 end
 
+node[:node_modules].each do |node_module|
+  nodejs_npm node_module do
+    action :install
+  end
+end
